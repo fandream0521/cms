@@ -2,10 +2,10 @@
 
 <template>
   <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <RouterLink to="/login">登录</RouterLink>
+  <RouterLink to="/main">Main</RouterLink>
+
+  <RouterView />
 </template>
 
 <style scoped></style>
