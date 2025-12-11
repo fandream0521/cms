@@ -1,11 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <RouterLink to="/login">登录</RouterLink>
-  <RouterLink to="/main">Main</RouterLink>
-
-  <RouterView />
+  <div class="app">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app {
+  height: 100vh;
+  width: 100vw;
+}
+</style>
