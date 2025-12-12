@@ -5,7 +5,6 @@ import '@/assets/css/index.less'
 import App from './App.vue'
 import router from './router'
 import pinia from './stores'
-import '@/services/config/index'
 
 const app = createApp(App)
 

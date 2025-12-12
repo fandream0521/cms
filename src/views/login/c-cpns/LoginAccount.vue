@@ -18,12 +18,12 @@ const rules = reactive<FormRules<LoginOption>>({
 
 <template>
   <div class="password">
-    <el-form style="max-width: 600px" :model="loginInfo" label-width="auto" label-position="left" :rules="rules">
+    <el-form style="max-width: 600px" :model="loginInfo" label-width="65px" label-position="right" :rules="rules">
       <el-form-item label="账号" prop="account" size="large" class="item">
         <el-input v-model="loginInfo.account" />
       </el-form-item>
       <el-form-item label="密码" prop="password" size="large" class="item">
-        <el-input v-model="loginInfo.password" />
+        <el-input v-model="loginInfo.password" show-password />
       </el-form-item>
     </el-form>
   </div>
@@ -33,8 +33,8 @@ const rules = reactive<FormRules<LoginOption>>({
 .password {
   padding: 0 20px;
 
-  .item {
-    margin: 20px 0;
+  .item:first-child {
+    margin: 15px 0 37px 0;
   }
 }
 </style>

@@ -2,9 +2,9 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 interface Interceptor {
   requestOnSuccess?: <T extends AxiosRequestConfig>(config: T) => T
-  requestOnFailure?: (error: unknown) => unknown
+  requestOnFailure?: <T>(error: T) => T
   responseOnSuccess?: <T = AxiosResponse, R = unknown>(response: T) => T | R
-  responseOnFailure?: (error: unknown) => unknown
+  responseOnFailure?: <T>(error: T) => T
 }
 
 export interface RequestConfig extends AxiosRequestConfig {

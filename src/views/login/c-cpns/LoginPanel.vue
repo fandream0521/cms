@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { ref } from 'vue';
 import { UserFilled, Iphone } from '@element-plus/icons-vue';
-import LoginPassword from './LoginPassword.vue';
+import LoginAccount from './LoginAccount.vue';
 import LoginPhone from './LoginPhone.vue';
 
 const loginInfo = ref<LoginOption>({
@@ -22,22 +22,22 @@ const login = () => {
 <template>
   <div class="panel">
     <h1 class="title">后台管理系统</h1>
-    <el-tabs v-model="loginInfo.type" class="tabs" stretch>
+    <el-tabs v-model="loginInfo.type" class="tabs" stretch type="border-card">
       <el-tab-pane name="password">
         <template #label>
           <span class="custom-tabs-label">
-            <el-icon :size="10">
+            <el-icon :size="14">
               <UserFilled />
             </el-icon>
             <span class="text">账号登陆</span>
           </span>
         </template>
-        <LoginPassword v-model="loginInfo" />
+        <LoginAccount v-model="loginInfo" />
       </el-tab-pane>
       <el-tab-pane name="phone">
         <template #label>
           <span class="custom-tabs-label">
-            <el-icon :size="10">
+            <el-icon :size="14">
               <Iphone />
             </el-icon>
             <span class="text">手机登录</span>
@@ -57,7 +57,7 @@ const login = () => {
 
 <style lang="less" scoped>
 .panel {
-  width: 330px;
+  width: 430px;
 
   .title {
     font-size: 46px;
@@ -67,18 +67,19 @@ const login = () => {
 
 
   .tabs {
-    border: 1px solid #eee;
+    border: 1px solid #efefef;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
     margin-top: 14px;
     margin-bottom: 5px;
 
     :deep(.el-tabs__header) {
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
     .custom-tabs-label {
-
       .text {
         margin-left: 5px;
+        font-size: 16px;
       }
     }
   }

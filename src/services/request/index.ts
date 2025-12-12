@@ -2,7 +2,7 @@ import axios, { type AxiosInstance } from 'axios'
 import type { RequestConfig } from '../types'
 
 class MyRequest {
-  #instance!: AxiosInstance
+  #instance: AxiosInstance
   constructor(config: RequestConfig) {
     this.#instance = axios.create(config)
 

@@ -18,7 +18,7 @@ const rules = reactive<FormRules<LoginOption>>({
 
 <template>
   <div class="phone">
-    <el-form style="max-width: 600px" :model="loginInfo" label-width="auto" label-position="left" :rules="rules">
+    <el-form style="max-width: 600px" :model="loginInfo" label-width="65px" label-position="right" :rules="rules">
       <el-form-item label="手机号" prop="phone" size="large" class="item">
         <el-input v-model="loginInfo.phone" />
       </el-form-item>
@@ -33,8 +33,8 @@ const rules = reactive<FormRules<LoginOption>>({
 .phone {
   padding: 0 20px;
 
-  .item {
-    margin: 20px 0;
+  .item:first-child {
+    margin: 15px 0 37px 0;
   }
 }
 </style>
