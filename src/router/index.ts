@@ -1,3 +1,4 @@
+import useLoginStore from '@/stores/login'
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
@@ -24,8 +25,22 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((guard) => {
-  console.log(guard)
+router.beforeEach((to) => {
+  const { token } = useLoginStore()
+  if (to.path !== '/login') {
+    if (!token) {
+      return {
+        path: '/login',
+        query: {
+          redirect: to.path,
+        },
+      }
+    }
+  } else {
+    if (token) {
+      return '/'
+    }
+  }
 })
 
 export default router

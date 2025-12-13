@@ -1,3 +1,4 @@
+import useLoginStore from '@/stores/login'
 import { BASE_URL, TIMEOUT } from './config'
 import MyRequest from './request'
 
@@ -6,13 +7,12 @@ const request = new MyRequest({
   timeout: TIMEOUT,
   interceptors: [
     {
-      requestOnSuccess(config) {
-        console.log('实例请求成功拦截器')
+      requestOnSuccess: (config) => {
+        const { token } = useLoginStore()
+        if (token && config.headers) {
+          config.headers['Authorization'] = `Bearer ${token}`
+        }
         return config
-      },
-      responseOnSuccess(response) {
-        console.log('实例响应成功拦截器, response:', response)
-        return response
       },
     },
   ],

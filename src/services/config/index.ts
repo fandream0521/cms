@@ -3,7 +3,7 @@ let BASE_URL = ''
 if (import.meta.env.MODE === 'production') {
   BASE_URL = ''
 } else {
-  BASE_URL = ''
+  BASE_URL = 'http://127.0.0.1:3000'
 }
 
 console.log(import.meta.env)

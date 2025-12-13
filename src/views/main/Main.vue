@@ -1,17 +1,32 @@
 <script setup lang='ts'>
-import { useCounterStore } from '@/stores/counter';
+import useLoginStore from '@/stores/login';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
-const counterStore = useCounterStore();
-const { count, doubleCount } = storeToRefs(counterStore);
-const { increment } = counterStore;
+const loginStore = useLoginStore();
+const { loginUser } = storeToRefs(loginStore);
+const { checkLoginStatusAction, logout } = loginStore;
+
+const router = useRouter();
+
+
+const checkLogin = async () => {
+  const user = await checkLoginStatusAction();
+  console.log(user);
+}
+
+const doLogout = () => {
+  logout();
+  router.replace('/login')
+}
 </script>
 
 <template>
   <div class="main">
-    <h2>counter: {{ count }}</h2>
-    <h2>doubleCounter: {{ doubleCount }}</h2>
-    <button @click="increment">+1</button>
+    <h2>counter: {{ loginUser?.name }}</h2>
+    <h2>doubleCounter: {{ loginUser?.email }}</h2>
+    <button @click="checkLogin">检查登录状态</button>
+    <button @click="doLogout">退出</button>
   </div>
 </template>
 

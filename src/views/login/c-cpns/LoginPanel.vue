@@ -1,20 +1,34 @@
 <script setup lang='ts'>
-import { ref } from 'vue';
+import { ref, useTemplateRef } from 'vue';
 import { UserFilled, Iphone } from '@element-plus/icons-vue';
 import LoginAccount from './LoginAccount.vue';
 import LoginPhone from './LoginPhone.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { local } from '@/utils/cache';
+import { CACHE_IS_REMEMBER_PWD } from '@/constants/login';
 
-const loginInfo = ref<LoginOption>({
-  type: 'password',
-  account: '',
-  phone: '',
-  password: '',
-  checkCode: '',
-  isRememberPassword: false
-});
+const accountRef = useTemplateRef("accountRef");
+const type = ref("account")
+const route = useRoute();
+const router = useRouter();
 
-const login = () => {
-  console.log(loginInfo.value);
+
+const isRememberPassword = ref<boolean>(local.getItem(CACHE_IS_REMEMBER_PWD) ?? false);
+
+const login = async () => {
+  try {
+    await accountRef.value?.doLogin(isRememberPassword.value);
+    let redirect = "/";
+    if (route.query && route.query.redirect) {
+      const queryRedirect = route.query.redirect;
+      if (queryRedirect instanceof Array) {
+        redirect = queryRedirect.join("/");
+      }
+    }
+    router.replace(redirect);
+  } catch (err) {
+    console.log("登录失败：", err);
+  }
 }
 
 </script>
@@ -22,8 +36,8 @@ const login = () => {
 <template>
   <div class="panel">
     <h1 class="title">后台管理系统</h1>
-    <el-tabs v-model="loginInfo.type" class="tabs" stretch type="border-card">
-      <el-tab-pane name="password">
+    <el-tabs v-model="type" class="tabs" stretch type="border-card">
+      <el-tab-pane name="account">
         <template #label>
           <span class="custom-tabs-label">
             <el-icon :size="14">
@@ -32,7 +46,7 @@ const login = () => {
             <span class="text">账号登陆</span>
           </span>
         </template>
-        <LoginAccount v-model="loginInfo" />
+        <LoginAccount ref="accountRef" />
       </el-tab-pane>
       <el-tab-pane name="phone">
         <template #label>
@@ -43,12 +57,12 @@ const login = () => {
             <span class="text">手机登录</span>
           </span>
         </template>
-        <LoginPhone v-model="loginInfo" />
+        <LoginPhone />
       </el-tab-pane>
     </el-tabs>
 
     <div class="pwd">
-      <el-checkbox v-model="loginInfo.isRememberPassword" label="记住密码" size="large" />
+      <el-checkbox v-model="isRememberPassword" label="记住密码" size="large" />
       <router-link to="/forget">忘记密码</router-link>
     </div>
     <el-button class="btn" type="primary" size="large" @click="login">立即登录</el-button>
