@@ -36,7 +36,7 @@ import MainHeader from '@/components/main-header/MainHeader.vue';
     }
 
     .content {
-      // background-color: blue;
+      background-color: blue;
     }
   }
 }
