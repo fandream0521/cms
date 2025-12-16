@@ -1,37 +1,43 @@
 <script setup lang='ts'>
-import useLoginStore from '@/stores/login';
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+import MainMenu from '@/components/main-menu/MainMenu.vue';
+import MainHeader from '@/components/main-header/MainHeader.vue';
 
-const loginStore = useLoginStore();
-const { loginUser } = storeToRefs(loginStore);
-const { checkLoginStatusAction, logout } = loginStore;
-
-const router = useRouter();
-
-
-const checkLogin = async () => {
-  const user = await checkLoginStatusAction();
-  console.log(user);
-}
-
-const doLogout = () => {
-  logout();
-  router.replace('/login')
-}
 </script>
 
 <template>
   <div class="main">
-    <h2>counter: {{ loginUser?.name }}</h2>
-    <h2>doubleCounter: {{ loginUser?.email }}</h2>
-    <button @click="checkLogin">检查登录状态</button>
-    <button @click="doLogout">退出</button>
+    <el-container class="main-container">
+      <el-aside width="200px" class="aside">
+        <main-menu />
+      </el-aside>
+      <el-container>
+        <el-header height="50px" class="header">
+          <main-header />
+        </el-header>
+        <el-main class="content">Main</el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <style lang="less" scoped>
 .main {
-  color: red;
+  height: 100%;
+
+  .main-container {
+    height: 100%;
+
+    .aside {
+      background-color: #001529;
+    }
+
+    .header {
+      background-color: green;
+    }
+
+    .content {
+      // background-color: blue;
+    }
+  }
 }
 </style>

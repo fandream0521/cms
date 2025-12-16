@@ -33,7 +33,7 @@ class MyRequest {
         .then((response) => {
           const res = response.data
 
-          if (res.code !== 0) {
+          if (res.code !== 200) {
             throw new Error(res.message)
           }
 
@@ -55,7 +55,7 @@ class MyRequest {
     })
   }
 
-  post<T>(url: string, data: unknown, config?: RequestConfig) {
+  post<T>(url: string, data?: unknown, config?: RequestConfig) {
     return this.request<T>({
       ...config,
       url,

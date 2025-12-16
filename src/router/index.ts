@@ -25,9 +25,9 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach((to) => {
-  const { token } = useLoginStore()
+router.beforeEach(async (to) => {
   if (to.path !== '/login') {
+    const { token } = useLoginStore()
     if (!token) {
       return {
         path: '/login',
@@ -35,10 +35,17 @@ router.beforeEach((to) => {
           redirect: to.path,
         },
       }
-    }
-  } else {
-    if (token) {
-      return '/'
+    } else {
+      const { checkLoginStatusAction } = useLoginStore()
+      const isValidToken = await checkLoginStatusAction()
+      if (!isValidToken) {
+        return {
+          path: '/login',
+          query: {
+            redirect: to.path,
+          },
+        }
+      }
     }
   }
 })
