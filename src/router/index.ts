@@ -13,6 +13,12 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/main',
     component: () => import('@/views/main/Main.vue'),
+    children: [
+      {
+        path: '/:pathMatcher(.*)',
+        component: () => import('@/views/not-found/NotFound.vue'),
+      },
+    ],
   },
   {
     path: '/:pathMatcher(.*)',

@@ -1,26 +1,39 @@
 <script setup lang='ts'>
 import type { Menu } from '@/types';
-defineProps<{ menu: Menu, index: string }>()
+import { Monitor } from '@element-plus/icons-vue';
+defineProps<{ menu: Menu }>()
 </script>
 
 <template>
   <template v-if="menu.children && menu.children.length > 0">
-    <el-sub-menu :index="index + ''">
+    <el-sub-menu :index="menu.url">
       <template #title>
+        <el-icon color="#fff" :size="14">
+          <component :is="Monitor" />
+        </el-icon>
         <span>{{ menu.name }}</span>
       </template>
-      <template v-for="(subMenu, idx) in menu.children" :key="subMenu.id">
-        <SubMainMenu :index="index + '-' + idx" :menu="subMenu" />
+      <template v-for="subMenu in menu.children" :key="subMenu.id">
+        <SubMainMenu :menu="subMenu" />
       </template>
     </el-sub-menu>
   </template>
   <template v-else>
-    <el-menu-item :index="index + ''">{{ menu.name }}</el-menu-item>
+    <el-menu-item :index="'/main' + menu.url">{{ menu.name }}</el-menu-item>
   </template>
 </template>
 
 <style lang="less" scoped>
-:deep(.el-menu-item) {
+.el-menu-item {
   background-color: #00153d;
+}
+
+.el-menu-item:hover {
+  background-color: blue;
+}
+
+.el-menu-item.is-active {
+  background-color: blue;
+  color: white;
 }
 </style>
