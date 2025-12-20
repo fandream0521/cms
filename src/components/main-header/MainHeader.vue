@@ -36,6 +36,8 @@ defineEmits(["collapseClick"])
   display: flex;
   align-items: center;
 
+  background-color: #eee;
+
   height: 100%;
 
   .menu-icon {

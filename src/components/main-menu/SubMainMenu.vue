@@ -1,7 +1,13 @@
 <script setup lang='ts'>
 import type { Menu } from '@/types';
 import { Monitor } from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
 defineProps<{ menu: Menu }>()
+
+const router = useRouter();
+function showRoutes() {
+  console.log(router.getRoutes());
+}
 </script>
 
 <template>
@@ -19,7 +25,7 @@ defineProps<{ menu: Menu }>()
     </el-sub-menu>
   </template>
   <template v-else>
-    <el-menu-item :index="'/main' + menu.url">{{ menu.name }}</el-menu-item>
+    <el-menu-item :index="'/main' + menu.url" @click="showRoutes">{{ menu.name }}</el-menu-item>
   </template>
 </template>
 

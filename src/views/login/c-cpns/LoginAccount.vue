@@ -52,7 +52,7 @@ const doLogin = async (isRememberPassword: boolean) => {
       ElMessage.success("登录成功")
     } else {
       console.log("error field: ", invalidFields);
-      ElMessage.error("请输入正确的信息！")
+      throw new Error(invalidFields + "")
     }
   })
 }

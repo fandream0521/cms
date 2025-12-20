@@ -1,14 +1,17 @@
 <script setup lang='ts'>
 import useLoginStore from '@/stores/login';
 import { ChatDotRound, Message, Search, SwitchButton, InfoFilled, Lock } from '@element-plus/icons-vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 const loginStore = useLoginStore();
+const { loginUser } = storeToRefs(loginStore);
 const { clearLogin } = loginStore;
 const router = useRouter();
 function handleExitClick() {
   clearLogin();
   router.push('/login')
 }
+
 </script>
 
 <template>
@@ -35,7 +38,7 @@ function handleExitClick() {
         <span class="user-info">
           <el-avatar :size="24" />
           <span class="text">
-            fandream
+            {{ loginUser?.name }}
           </span>
         </span>
         <template #dropdown>
