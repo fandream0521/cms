@@ -3,14 +3,13 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { dynamicRoutes } from './dynamicRouter'
 import type { Menu } from '@/types'
 import NotFound from '@/views/not-found/NotFound.vue'
-import { storeToRefs } from 'pinia'
 
 const mainRoute: RouteRecordRaw = {
   path: '/main',
   component: () => import('@/views/main/index.vue'),
   children: [
     {
-      path: '/:pathMatcher(.*)',
+      path: ':pathMatcher(.*)',
       component: () => import('@/views/not-found/NotFound.vue'),
     },
   ],
@@ -24,7 +23,6 @@ const routes: RouteRecordRaw[] = [
     path: '/login',
     component: () => import('@/views/login/Login.vue'),
   },
-  mainRoute,
   {
     path: '/:pathMatcher(.*)',
     component: () => import('@/views/not-found/NotFound.vue'),
@@ -39,7 +37,23 @@ const router = createRouter({
 export function initMenu(menus: Menu[]) {
   const routes = [...transferMenuToRoutes(menus), ...(mainRoute.children ?? [])]
   mainRoute.children = routes
+  const firstRoute = findFirstRoute(routes)
+  if (firstRoute) {
+    mainRoute.redirect = firstRoute
+  }
   router.addRoute(mainRoute)
+  console.log('total route: ', router.getRoutes())
+}
+
+function findFirstRoute(routes: RouteRecordRaw[]) {
+  if (!routes || routes.length == 0) {
+    return null
+  }
+  const firstRoute = routes[0]
+  if (firstRoute?.children && firstRoute.children.length > 0) {
+    return findFirstRoute(firstRoute.children)
+  }
+  return firstRoute?.path
 }
 
 function transferMenuToRoutes(menus: Menu[]): RouteRecordRaw[] {
@@ -54,6 +68,10 @@ function transferMenuToRoutes(menus: Menu[]): RouteRecordRaw[] {
 
     if (menu.children && menu.children.length > 0) {
       route.children = transferMenuToRoutes(menu.children)
+      const firstRoue = findFirstRoute(route.children)
+      if (firstRoue) {
+        route.redirect = firstRoue
+      }
     } else {
       const comp = dynamicRoutes[path]
       if (comp) {
@@ -68,17 +86,8 @@ function transferMenuToRoutes(menus: Menu[]): RouteRecordRaw[] {
 }
 
 router.beforeEach(async (to) => {
+  const { token } = useLoginStore()
   const path = to.path
-  const { token, menuList, menuInit } = storeToRefs(useLoginStore())
-  if (!menuInit.value) {
-    if (menuList.value) {
-      console.log('init router')
-      initMenu(menuList.value)
-      menuInit.value = true
-      router.replace(to)
-    }
-    return
-  }
   if (path !== '/login') {
     if (!token) {
       return {

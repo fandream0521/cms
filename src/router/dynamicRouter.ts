@@ -1,6 +1,6 @@
 type ImportType = typeof import('*.vue')
 type ImportFnType = () => Promise<ImportType>
-const dynamicRouters = import.meta.glob<boolean, string, ImportType>('@/views/main/**/*.vue')
+const dynamicRouters = import.meta.glob<boolean, string, ImportType>('@/views/main/**/index.vue')
 
 export const dynamicRoutes = Object.entries(dynamicRouters).reduce(
   (router, [path, fn]) => {

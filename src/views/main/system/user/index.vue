@@ -1,15 +1,14 @@
 <script setup lang='ts'>
+import UserContent from './components/UserContent.vue';
+import UserSearch from './components/UserSearch.vue';
+
 
 </script>
 
 <template>
   <div class="user">
-    <h2>user</h2>
+    <UserSearch />
+    <UserContent />
   </div>
 </template>
-
-<style lang="less" scoped>
-.user {
-  color: red;
-}
-</style>
+<style lang="less" scoped></style>

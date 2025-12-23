@@ -1,7 +1,8 @@
 <script setup lang='ts'>
-import { Expand, Fold } from '@element-plus/icons-vue';
+import { Expand, Fold, ArrowRight } from '@element-plus/icons-vue';
 import HeaderInfo from './c-cpns/HeaderInfo.vue';
-
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 defineProps({
   collapse: {
     type: Boolean
@@ -9,6 +10,11 @@ defineProps({
 })
 
 defineEmits(["collapseClick"])
+const route = useRoute();
+
+const matchedRoutes = computed(() => {
+  return route.matched.slice(1);
+})
 
 </script>
 
@@ -22,7 +28,11 @@ defineEmits(["collapseClick"])
     </div>
     <div class="content">
       <div class="breadcrumbs">
-        系统
+        <el-breadcrumb :separator-icon="ArrowRight">
+          <template v-for="route in matchedRoutes" :key="route.path">
+            <el-breadcrumb-item :to="route.path">{{ route.name }}</el-breadcrumb-item>
+          </template>
+        </el-breadcrumb>
       </div>
       <div class="info">
         <HeaderInfo />

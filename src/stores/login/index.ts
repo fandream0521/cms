@@ -12,7 +12,6 @@ const useLoginStore = defineStore(
     const token = ref<string>()
     const loginUser = ref<UserInfo>()
     const menuList = ref<Menu[]>()
-    const menuInit = ref<boolean>(false)
 
     const accountLoginAction = async (account: AccountLoginDto) => {
       try {
@@ -27,7 +26,6 @@ const useLoginStore = defineStore(
         console.log('menus', menus)
         menuList.value = menus
         initMenu(menus)
-        menuInit.value = true
       } catch (err) {
         console.log('登录出现错误:', err)
         throw err
@@ -55,7 +53,6 @@ const useLoginStore = defineStore(
       token,
       loginUser,
       menuList,
-      menuInit,
       accountLoginAction,
       checkLoginStatusAction,
       clearLogin,

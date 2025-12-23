@@ -41,7 +41,9 @@ const collapse = ref(false);
       transition: width .6s ease;
     }
 
-    .content {}
+    .content {
+      background-color: #fafafa;
+    }
   }
 }
 </style>
