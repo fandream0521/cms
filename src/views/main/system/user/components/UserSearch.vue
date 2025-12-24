@@ -1,21 +1,19 @@
 <script setup lang='ts'>
 import { Search, RefreshRight } from '@element-plus/icons-vue'
 import type { UserSearchDto } from '@/types'
-import { reactive, useTemplateRef } from 'vue'
+import { useTemplateRef } from 'vue'
 import type { FormInstance } from 'element-plus'
-import { getUserList } from '@/services/user'
+import useUserStore from '@/stores/system/user'
 
-const searchForm = reactive<UserSearchDto>({
-  offset: 0,
-  size: 10
-})
+const searchForm = defineModel<UserSearchDto>({ required: true })
 
 const formRef = useTemplateRef<FormInstance>('formRef');
 
+const userStore = useUserStore();
 
-const handleQueryClick = async () => {
-  const list = await getUserList(searchForm);
-  console.log(list);
+const handleQueryClick = () => {
+  searchForm.value.curPage = 1;
+  userStore.fetchUserList(searchForm.value);
 }
 
 const resetForm = (formEl: FormInstance | null | undefined) => {

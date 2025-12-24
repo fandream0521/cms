@@ -3,6 +3,6 @@ export * from './user.type'
 export * from './menu.type'
 
 export interface PageDataDto {
-  offset: number
+  curPage: number
   size: number
 }

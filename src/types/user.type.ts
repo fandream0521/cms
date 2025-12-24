@@ -16,6 +16,11 @@ export interface UserInfo {
   lastLoginAt: string
 }
 
+export interface UserInfoPage {
+  list: UserInfo[]
+  totalCount: number
+}
+
 export interface UserSearchDto extends PageDataDto {
   name?: string
   realname?: string

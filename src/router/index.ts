@@ -42,7 +42,6 @@ export function initMenu(menus: Menu[]) {
     mainRoute.redirect = firstRoute
   }
   router.addRoute(mainRoute)
-  console.log('total route: ', router.getRoutes())
 }
 
 function findFirstRoute(routes: RouteRecordRaw[]) {
@@ -79,7 +78,6 @@ function transferMenuToRoutes(menus: Menu[]): RouteRecordRaw[] {
       } else {
         route.component = NotFound
       }
-      console.log(menu)
     }
     return route
   })

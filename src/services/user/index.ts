@@ -1,4 +1,4 @@
-import type { UserInfo, UserSearchDto } from '@/types'
+import type { UserInfo, UserSearchDto, UserInfoPage } from '@/types'
 import { request } from '..'
 
 export function getUserById(id: number) {
@@ -6,5 +6,9 @@ export function getUserById(id: number) {
 }
 
 export function getUserList(dto: UserSearchDto) {
-  return request.post<UserInfo[]>('/users/list', dto)
+  const queryDto = {
+    ...dto,
+    offset: (dto.curPage - 1) * dto.size,
+  }
+  return request.post<UserInfoPage>('/users/list', queryDto)
 }
