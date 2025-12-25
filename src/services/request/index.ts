@@ -63,6 +63,14 @@ class MyRequest {
       method: 'POST',
     })
   }
+
+  delete(url: string, config?: RequestConfig) {
+    return this.request({
+      ...config,
+      url,
+      method: 'DELETE',
+    })
+  }
 }
 
 export default MyRequest

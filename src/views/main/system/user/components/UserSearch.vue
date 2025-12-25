@@ -20,6 +20,7 @@ const resetForm = (formEl: FormInstance | null | undefined) => {
   console.log(formEl)
   if (!formEl) return
   formEl.resetFields()
+  userStore.fetchUserList(searchForm.value);
 }
 </script>
 

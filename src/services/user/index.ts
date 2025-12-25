@@ -12,3 +12,7 @@ export function getUserList(dto: UserSearchDto) {
   }
   return request.post<UserInfoPage>('/users/list', queryDto)
 }
+
+export function deleteUser(id: number) {
+  return request.delete(`/users/${id}`)
+}
