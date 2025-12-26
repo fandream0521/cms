@@ -16,6 +16,16 @@ export interface UserInfo {
   lastLoginAt: string
 }
 
+export interface UserCreateOrUpdateDto {
+  id?: number
+  name: string
+  realname: string
+  password: string
+  roleId: number
+  departmentId: number
+  cellphone: string
+}
+
 export interface UserInfoPage {
   list: UserInfo[]
   totalCount: number

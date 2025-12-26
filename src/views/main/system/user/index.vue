@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from 'vue';
 import UserContent from './components/UserContent.vue';
 import UserSearch from './components/UserSearch.vue';
-import type { UserInfo, UserSearchDto } from '@/types';
+import type { UserCreateOrUpdateDto, UserSearchDto } from '@/types';
 import useUserStore from '@/stores/system/user';
 import UserModal from './components/UserModal.vue';
 
@@ -13,11 +13,12 @@ const searchForm = reactive<UserSearchDto>({
 
 const userStore = useUserStore();
 
-const userInfo = ref<UserInfo>({} as unknown as UserInfo);
-const handleSaveUser = (user: UserInfo | null) => {
+const userInfo = ref<UserCreateOrUpdateDto>({} as unknown as UserCreateOrUpdateDto);
+const handleSaveUser = (user: UserCreateOrUpdateDto | null) => {
   if (user) {
     userInfo.value = user;
   }
+  console.log(userInfo.value)
   dialogVisible.value = true;
 }
 onMounted(() => {

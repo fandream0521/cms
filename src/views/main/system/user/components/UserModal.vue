@@ -1,34 +1,60 @@
 <script setup lang='ts'>
-import type { UserInfo } from '@/types';
-import { reactive } from 'vue'
-defineProps<{ user: UserInfo }>();
+import { getAllDepartmentList } from '@/services/department';
+import { getAllRoleList } from '@/services/role';
+import type { UserCreateOrUpdateDto } from '@/types';
+import type { DepartmentListDto } from '@/types/department.type';
+import type { RoleListDto } from '@/types/role.type';
+import { onMounted, ref, watch } from 'vue'
+const props = defineProps<{ user: UserCreateOrUpdateDto }>();
 const dialogVisible = defineModel<boolean>({ required: true })
-const formLabelWidth = '140px'
 
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+const userInfo = ref(props.user);
+const roleList = ref<RoleListDto[]>([]);
+const departmentList = ref<DepartmentListDto[]>([])
+const getAllRole = async () => {
+  const res = await getAllRoleList();
+  roleList.value = res.list;
+}
+
+const getAllDepartment = async () => {
+  const res = await getAllDepartmentList();
+  departmentList.value = res.list;
+}
+watch(() => props.user, (user) => {
+  userInfo.value = user;
 })
 
+onMounted(() => {
+  getAllDepartment();
+  getAllRole();
+})
 </script>
 
 <template>
   <div class="modal">
-    <el-dialog v-model="dialogVisible" :title="user === null ? '新增' : '编辑'" width="500" center>
-      <el-form :model="user">
-        <el-form-item label="Promotion name" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off" />
+    <el-dialog v-model="dialogVisible" :title="!userInfo.id ? '新增' : '编辑'" width="500" center>
+      <el-form :model="userInfo" label-width="80px" size="large">
+        <el-form-item label="用户名" prop="name">
+          <el-input v-model="userInfo.name" placeholder="请输入用户名" clearable />
         </el-form-item>
-        <el-form-item label="Zones" :label-width="formLabelWidth">
-          <el-select v-model="form.region" placeholder="Please select a zone">
-            <el-option label="Zone No.1" value="shanghai" />
-            <el-option label="Zone No.2" value="beijing" />
+        <el-form-item label="真实姓名">
+          <el-input v-model="userInfo.realname" placeholder="请输入真实姓名" clearable />
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="userInfo.password" type="password" placeholder="请输入密码" clearable show-password />
+        </el-form-item>
+        <el-form-item label="电话号码">
+          <el-input v-model="userInfo.cellphone" placeholder="请输入真实姓名" clearable />
+        </el-form-item>
+        <el-form-item label="选择角色">
+          <el-select v-model="userInfo.roleId" placeholder="请选择角色">
+            <el-option v-for="role in roleList" :label="role.name" :value="role.id" :key="role.id" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="选择部门">
+          <el-select v-model="userInfo.roleId" placeholder="请选择部门">
+            <el-option v-for="department in departmentList" :label="department.name" :value="department.id"
+              :key="department.id" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -46,6 +72,8 @@ const form = reactive({
 
 <style lang="less" scoped>
 .modal {
-  color: red;
+  .el-form {
+    margin-top: 20px;
+  }
 }
 </style>
