@@ -1,3 +1,5 @@
+import type { PageDataDto } from '.'
+
 export interface DepartmentListDto {
   id: number
   name: string
@@ -10,4 +12,10 @@ export interface DepartmentListDto {
 export interface DepartmentListResult {
   list: DepartmentListDto[]
   totalCount: number
+}
+
+export interface DepartmentSearchDto extends PageDataDto {
+  name?: string
+  parentId?: number
+  createAt?: [Date, Date]
 }

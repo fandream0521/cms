@@ -4,6 +4,7 @@ import useUserStore from '@/stores/system/user';
 import { Edit, Delete } from '@element-plus/icons-vue';
 import type { UserSearchDto } from '@/types';
 import { storeToRefs } from 'pinia';
+import { offset8hours } from '@/utils/day';
 
 defineEmits(["saveUser"]);
 const searchForm = defineModel<UserSearchDto>({ required: true })
@@ -45,8 +46,10 @@ const deletedUserInfo = async (id: number) => {
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="createAt" label="创建时间" :min-width="200" align="center" />
-        <el-table-column prop="updateAt" label="更新时间" :min-width="200" align="center" />
+        <el-table-column prop="createAt" label="创建时间" :min-width="200" align="center"
+          :formatter="row => offset8hours(row.createAt)" />
+        <el-table-column prop="updateAt" label="更新时间" :min-width="200" align="center"
+          :formatter="row => offset8hours(row.createAt)" />
         <el-table-column fixed="right" label="操作" min-width="120" align="center">
           <template #default="{ row }">
             <el-button link type="primary" size="small" :icon="Edit" @click="$emit('saveUser', row)">编辑</el-button>

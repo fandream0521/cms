@@ -1,4 +1,4 @@
-import type { UserInfo, UserSearchDto, UserInfoPage } from '@/types'
+import type { UserInfo, UserSearchDto, UserInfoPage, UserCreateOrUpdateDto } from '@/types'
 import { request } from '..'
 
 export function getUserById(id: number) {
@@ -15,4 +15,12 @@ export function getUserList(dto: UserSearchDto) {
 
 export function deleteUser(id: number) {
   return request.delete(`/users/${id}`)
+}
+
+export function createUser(dto: UserCreateOrUpdateDto) {
+  return request.post<{ id: number }>('/users', dto)
+}
+
+export function updateUser(dto: UserCreateOrUpdateDto) {
+  return request.patch<{ updated: boolean }>(`/users/${dto.id}`, dto)
 }

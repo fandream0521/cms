@@ -71,6 +71,14 @@ class MyRequest {
       method: 'DELETE',
     })
   }
+  patch<T>(url: string, data?: unknown, config?: RequestConfig) {
+    return this.request<T>({
+      ...config,
+      url,
+      data,
+      method: 'PATCH',
+    })
+  }
 }
 
 export default MyRequest
