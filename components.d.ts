@@ -45,7 +45,6 @@ declare module 'vue' {
     HeaderInfo: typeof import('./src/components/main-header/c-cpns/HeaderInfo.vue')['default']
     MainHeader: typeof import('./src/components/main-header/MainHeader.vue')['default']
     MainMenu: typeof import('./src/components/main-menu/MainMenu.vue')['default']
-    PageConent: typeof import('./src/components/dynamic-table/PageConent.vue')['default']
     PageContent: typeof import('./src/components/dynamic-table/PageContent.vue')['default']
     PageModal: typeof import('./src/components/dynamic-table/PageModal.vue')['default']
     PageSearch: typeof import('./src/components/dynamic-table/PageSearch.vue')['default']

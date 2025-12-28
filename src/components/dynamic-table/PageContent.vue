@@ -21,34 +21,36 @@ const pageSize = ref(10);
     <main class="table">
       <el-table :data="list" style="width: 100%" :style="config.style">
         <template v-for="(item, idx) in config.fields" :key="item.prop === '' ? idx : item.prop">
-          <template v-if="item.type === 'button'">
-            <el-table-column :prop="item.prop" :label="item.label" :type="item.type" :width="item.width"
-              :min-width="item.minWidth" :align="item.align">
+          <template v-if="item.type === 'custom'">
+            <el-table-column v-bind="item">
               <template #default="{ row }">
-                <el-button size="small" :type="item.buttonConfig?.typeConvert[row[item.prop]]" plain>
-                  {{ item.buttonConfig?.valueConverter?.[row[item.prop]] }}
-                </el-button>
+                <slot :name="item.slotName" :data="row" :prop="item.prop" :val="row[item.prop]">
+                  {{ row[item.prop] }}
+                </slot>
+              </template>
+            </el-table-column>
+          </template>
+          <template v-else-if="item.type === 'handler'">
+            <el-table-column v-bind="item">
+              <template #default="{ row }">
+                <slot :name="item.slotName" :data="row" :prop="item.prop" :val="row[item.prop]">
+                  <el-button link type="primary" size="small" :icon="Edit" @click="$emit('save', row)">编辑</el-button>
+                  <el-button link type="danger" size="small" :icon="Delete" @click="$emit('delete', row.id)">
+                    删除
+                  </el-button>
+                </slot>
               </template>
             </el-table-column>
           </template>
           <template v-else>
-            <el-table-column :prop="item.prop" :label="item.label" :type="item.type" :width="item.width"
-              :min-width="item.minWidth" :align="item.align" :formatter="row => {
-                if (item.formatter) {
-                  return item.formatter(row[item.prop])
-                }
-                return row[item.prop];
-              }" />
+            <el-table-column v-bind="item" :formatter="row => {
+              if (item.formatter) {
+                return item.formatter(row[item.prop])
+              }
+              return row[item.prop];
+            }" />
           </template>
         </template>
-        <el-table-column fixed="right" label="操作" min-width="120" align="center">
-          <template #default="{ row }">
-            <el-button link type="primary" size="small" :icon="Edit" @click="$emit('save', row)">编辑</el-button>
-            <el-button link type="danger" size="small" :icon="Delete" @click="$emit('delete', row.id)">
-              删除
-            </el-button>
-          </template>
-        </el-table-column>
       </el-table>
     </main>
     <div class="pagination">

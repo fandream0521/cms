@@ -1,4 +1,6 @@
+import type { DynamicTableConfig } from '@/hooks/useDynamicTable'
 import { getAllDepartmentList } from '@/services/department'
+import useDepartmentStore from '@/stores/system/department'
 import type { ContentConfig, SearchConfig, ModalConfig } from '@/types'
 import { offset8hours } from '@/utils/day'
 export const searchConfig: SearchConfig = {
@@ -144,4 +146,9 @@ export const modalConfig: ModalConfig = {
       },
     },
   ],
+}
+
+const departmentStore = useDepartmentStore()
+export const dynamicTableConfig: DynamicTableConfig = {
+  fetchFn: departmentStore.fetchDepartmentList,
 }

@@ -18,21 +18,17 @@ export interface SearchConfig {
   fields: FormField[]
 }
 
-export type ContentFieldType = 'default' | 'index' | 'selection' | 'button'
-export type ContentButtonType = 'success' | 'danger'
-export interface ButtonConfig {
-  typeConvert: Record<string, ContentButtonType>
-  valueConverter?: Record<string, unknown>
-}
+export type ContentFieldType = 'default' | 'index' | 'selection' | 'custom' | 'handler'
 
 export interface ContentField {
   type: ContentFieldType
   label?: string
+  slotName?: string
   prop: string
   width?: string
   minWidth?: number
   align?: string
-  buttonConfig?: ButtonConfig
+  fixed?: string
   formatter?: (val: string) => string
 }
 

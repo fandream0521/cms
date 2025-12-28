@@ -4,8 +4,6 @@ import type { SearchConfig, SelectionOption } from '@/types'
 import { ref, useTemplateRef, onMounted } from 'vue'
 import type { FormInstance } from 'element-plus'
 
-
-
 const props = defineProps<{ config: SearchConfig }>();
 const emit = defineEmits(["search", "reset"])
 

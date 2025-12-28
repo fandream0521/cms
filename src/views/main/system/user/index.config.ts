@@ -1,5 +1,7 @@
+import type { DynamicTableConfig } from '@/hooks/useDynamicTable'
 import { getAllDepartmentList } from '@/services/department'
 import { getAllRoleList } from '@/services/role'
+import useUserStore from '@/stores/system/user'
 import type { ContentConfig, ModalConfig, SearchConfig } from '@/types'
 import { offset8hours } from '@/utils/day'
 export const searchConfig: SearchConfig = {
@@ -84,21 +86,12 @@ export const contentConfig: ContentConfig = {
       align: 'center',
     },
     {
-      type: 'button',
+      type: 'custom',
       prop: 'enable',
+      slotName: 'enable',
       label: '状态',
       minWidth: 200,
       align: 'center',
-      buttonConfig: {
-        typeConvert: {
-          '0': 'danger',
-          '1': 'success',
-        },
-        valueConverter: {
-          '0': '禁用',
-          '1': '启用',
-        },
-      },
     },
     {
       type: 'default',
@@ -115,6 +108,15 @@ export const contentConfig: ContentConfig = {
       minWidth: 200,
       align: 'center',
       formatter: (row) => offset8hours(row),
+    },
+    {
+      type: 'handler',
+      prop: '',
+      label: '操作',
+      minWidth: 120,
+      align: 'center',
+      fixed: 'right',
+      slotName: 'handler',
     },
   ],
 }
@@ -190,4 +192,12 @@ export const modalConfig: ModalConfig = {
       },
     },
   ],
+}
+
+const userStore = useUserStore()
+export const dynamicTableConfig: DynamicTableConfig = {
+  fetchFn: userStore.fetchUserList,
+  createFn: userStore.createUserInfo as unknown as (dto: Record<string, unknown>) => Promise<void>,
+  updateFn: userStore.updateUserInfo as unknown as (dto: Record<string, unknown>) => Promise<void>,
+  deleteFn: userStore.deleteUserInfo,
 }
