@@ -16,10 +16,10 @@ const pageSize = ref(10);
       <h3 class="title">
         {{ config.name }}列表
       </h3>
-      <el-button type="primary" @click="$emit('save')">新建{{ config.name }}</el-button>
+      <el-button type="primary" @click="$emit('save', null)">新建{{ config.name }}</el-button>
     </header>
     <main class="table">
-      <el-table :data="list" style="width: 100%" :style="config.style">
+      <el-table :data="list" style="width: 100%" :style="config.style" row-key="id">
         <template v-for="(item, idx) in config.fields" :key="item.prop === '' ? idx : item.prop">
           <template v-if="item.type === 'custom'">
             <el-table-column v-bind="item">
@@ -53,7 +53,7 @@ const pageSize = ref(10);
         </template>
       </el-table>
     </main>
-    <div class="pagination">
+    <div class="pagination" v-if="total > 0">
       <el-pagination background layout="total, prev, pager, next, sizes" v-model:page-size="pageSize"
         v-model:current-page="curPage" :total="total" @current-change="$emit('pageChange', curPage)"
         @size-change="$emit('sizeChange', pageSize)" />

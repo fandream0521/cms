@@ -1,4 +1,11 @@
-export type SearchFieldType = 'input' | 'password' | 'selection' | 'time' | 'date-time' | 'date'
+export type SearchFieldType =
+  | 'input'
+  | 'password'
+  | 'selection'
+  | 'time'
+  | 'date-time'
+  | 'date'
+  | 'custom'
 
 export interface SelectionOption {
   label: string
@@ -7,11 +14,12 @@ export interface SelectionOption {
 
 export interface FormField {
   type: SearchFieldType
-  label: string
+  label?: string
   prop: string
-  placeholder: string
+  placeholder?: string
   selectionOptions?: SelectionOption[]
   selectionLoader?: () => Promise<SelectionOption[]>
+  slotName?: string
 }
 
 export interface SearchConfig {

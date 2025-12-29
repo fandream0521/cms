@@ -2,7 +2,6 @@
 import useUserStore from '@/stores/system/user';
 import { searchConfig, contentConfig, modalConfig, dynamicTableConfig } from './index.config'
 import { storeToRefs } from 'pinia';
-import PageModal from '@/components/dynamic-table/PageModal.vue';
 import { useDynamicTable } from '@/hooks/useDynamicTable';
 const {
   info,

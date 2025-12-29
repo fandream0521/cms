@@ -71,6 +71,14 @@ onMounted(async () => {
                 start-placeholder="开始时间" end-placeholder="结束时间" />
             </el-form-item>
           </template>
+          <template v-else-if="item.type === 'custom'">
+            <el-form-item v-bind="item">
+              <template #default>
+                <slot :name="item.slotName">
+                </slot>
+              </template>
+            </el-form-item>
+          </template>
         </template>
       </el-form>
       <template #footer>

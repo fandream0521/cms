@@ -1,3 +1,5 @@
+import type { PageDataDto } from '.'
+
 export interface RoleListDto {
   id: number
   name: string
@@ -9,4 +11,10 @@ export interface RoleListDto {
 export interface RoleListResult {
   list: RoleListDto[]
   totalCount: number
+}
+
+export interface RoleSearchDto extends PageDataDto {
+  name?: string
+  intro?: string
+  createAt?: [Date, Date]
 }

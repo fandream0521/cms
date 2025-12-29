@@ -1,71 +1,51 @@
 import type { DynamicTableConfig } from '@/hooks/useDynamicTable'
 import { getAllDepartmentList } from '@/services/department'
-import useDepartmentStore from '@/stores/system/department'
-import type { ContentConfig, SearchConfig, ModalConfig } from '@/types'
+import useMenuStore from '@/stores/system/menu'
+import type { ContentConfig, ModalConfig } from '@/types'
 import { offset8hours } from '@/utils/day'
-export const searchConfig: SearchConfig = {
-  fields: [
-    {
-      type: 'input',
-      label: '部门名称',
-      prop: 'name',
-      placeholder: '请输入部门名称',
-    },
-    {
-      type: 'selection',
-      label: '部门领导',
-      prop: 'leader',
-      placeholder: '请选择部门领导',
-      selectionLoader: async () => {
-        const departments = await getAllDepartmentList()
-        return departments.list.map((department) => ({
-          label: department.leader,
-          value: department.id,
-        }))
-      },
-    },
-    {
-      type: 'date-time',
-      label: '创建时间',
-      prop: 'createAt',
-      placeholder: '',
-    },
-  ],
-}
 
 export const contentConfig: ContentConfig = {
-  name: '部门',
+  name: '菜单',
   fields: [
-    {
-      type: 'selection',
-      prop: '',
-      width: '55',
-    },
-    {
-      type: 'index',
-      prop: '',
-      label: '序号',
-      width: '60',
-      align: 'center',
-    },
     {
       type: 'default',
       prop: 'name',
-      label: '名称',
+      label: '菜单名称',
       minWidth: 200,
       align: 'center',
     },
     {
       type: 'default',
-      prop: 'leader',
-      label: '部门领导',
+      prop: 'type',
+      label: '级别',
       minWidth: 200,
       align: 'center',
     },
     {
       type: 'default',
-      prop: 'parentId',
-      label: '上级部门',
+      prop: 'url',
+      label: '菜单url',
+      minWidth: 200,
+      align: 'center',
+    },
+    {
+      type: 'default',
+      prop: 'icon',
+      label: '菜单icon',
+      minWidth: 200,
+      align: 'center',
+    },
+    {
+      type: 'default',
+      prop: 'sort',
+      label: '排序',
+      minWidth: 200,
+      align: 'center',
+    },
+    {
+      type: 'default',
+      prop: 'auth',
+      label: '权限',
       minWidth: 200,
       align: 'center',
     },
@@ -98,7 +78,7 @@ export const contentConfig: ContentConfig = {
 }
 
 export const modalConfig: ModalConfig = {
-  name: '用户',
+  name: '菜单',
   ignorePasswordWhenEdit: true,
   fields: [
     {
@@ -157,7 +137,7 @@ export const modalConfig: ModalConfig = {
   ],
 }
 
-const departmentStore = useDepartmentStore()
+const menuStore = useMenuStore()
 export const dynamicTableConfig: DynamicTableConfig = {
-  fetchFn: departmentStore.fetchDepartmentList,
+  fetchFn: menuStore.fetchMenuTree,
 }

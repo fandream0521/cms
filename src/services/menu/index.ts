@@ -12,3 +12,7 @@ export function getMenuList() {
     name: '',
   })
 }
+
+export function getMenuTree() {
+  return request.post<Menu[]>('/menu/tree')
+}
